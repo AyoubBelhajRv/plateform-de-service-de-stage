@@ -1,0 +1,26 @@
+.title {
+    color: #1b70b6;
+    font-weight: 600;
+    font-size: 22px;
+    display: block;
+    line-height: 28px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.bg-image {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+}
+
+.bg-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    filter: brightness(0.5);
+    /* Adjust brightness for better contrast with text */
+}

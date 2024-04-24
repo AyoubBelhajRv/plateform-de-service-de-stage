@@ -1,0 +1,46 @@
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-task-button {
+    margin-left: 5px;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 0 auto;
+}
+
+.mat-elevation-z8 {
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.mat-header-cell,
+.mat-cell {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.mat-header-cell {
+    font-weight: bold;
+}
+
+.mat-cell {
+    background-color: #f9f9f9;
+}
+
+.mat-row:hover {
+    background-color: #e0e0e0;
+}

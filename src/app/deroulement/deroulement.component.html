@@ -1,0 +1,136 @@
+<div class="container" id="main-container">
+  <div class="row">
+    <div class="col-lg-3">
+      <div id="sidebar" class="demo-app-sidebar">
+        <div class="demo-app-sidebar-section">
+          <h2 class="text-black mb-4">Calendar Settings</h2>
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" [checked]="calendarVisible"
+              (change)="handleCalendarToggle()" id="toggleCalendar">
+            <label class="form-check-label" for="toggleCalendar">Show Calendar</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" [checked]="calendarOptions().weekends"
+              (change)="handleWeekendsToggle()" id="toggleWeekends">
+            <label class="form-check-label" for="toggleWeekends">Show Weekends</label>
+          </div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="card-body">
+            <div id="external-events" class="demo-app-sidebar-section mt-2">
+              <h2 class="card-title mb-4">Draggable Events</h2>
+              <div id="Addev" class="list-group">
+                <ng-container *ngFor="let event of ListTitle">
+                  <div [class]="'bg-'+ event.color" class="list-group-item list-group-item-action fc-event"
+                    [style.background-color]="event.color">
+                    <div class="fc-event-main">{{event.title}}</div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="card-body">
+            <h2 class="card-title mb-4 text-center">Add New Event</h2>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" [formControl]="eventTitle" placeholder="Event Title"
+                aria-label="Event Title" aria-describedby="button-addon2">
+              <button (click)="addeventColor(colorAdd)" [class]="'btn btn-'+ colorAdd " type="button"
+                id="button-addon2">Add Event</button>
+            </div>
+            <div class="color-picker mb-3">
+              <h6>Choose Event Color:</h6>
+              <div class="color-cubes">
+                <ng-container *ngFor="let color of ListColor">
+                  <div (click)="changeColorAdd(color)" class="color-cube" [class]="'bg-' + color">
+                    <i class="fas fa-square"></i>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="demo-app-sidebar-section mt-4 d-flex flex-column justify-content-center">
+
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9 mt-4 gold">
+      <div class="demo-app-main  p-3 rounded">
+        <full-calendar *ngIf="calendarVisible()" [options]="calendarOptions()">
+          <ng-template #eventContent let-arg>
+            <b>{{ arg.timeText }}</b>
+            <i>{{ arg.event.title }}</i>
+          </ng-template>
+        </full-calendar>
+        <h2 class="text-black mb-4">All Events ({{ ListEvenements.length }})</h2>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Title</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let event of ListEvenements">
+                <td>{{ event.date_debut }}</td>
+                <td>{{ event.date_fin }}</td>
+                <td>{{ event.title }}</td>
+                <td>
+                  <button class="btn btn-warning btn-sm mr-1" (click)="onOpenModal(event)">Edit</button>
+                  <button class="btn btn-danger btn-sm" (click)="deleteEvent(event.id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="updateEventModal" tabindex="-1" role="dialog"
+      aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateEventModalLabel">Edit Event {{editEv.title}}</h5>
+            <button type="button" class="close" (click)="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #editForm="ngForm">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" [(ngModel)]="editEv.title" name="title" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Title">
+              </div>
+              <input type="hidden" [(ngModel)]="editEv.id" name="id" class="form-control" id="id">
+
+              <div class="mb-3">
+                <label for="editStartDate" class="form-label">Start Date</label>
+                <input type="text" [(ngModel)]="editEv.date_debut" name="date_debut" class="form-control" id="editStartDate">
+              </div>
+              <div class="mb-3">
+                <label for="editEndDate" class="form-label">End Date</label>
+                <input type="text" [(ngModel)]="editEv.date_fin" name="date_fin" class="form-control" id="editEndDate">
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="" data-dismiss="modal" (click)="closeModal()" class="btn btn-secondary">Close</button>
+                <button (click)="editEvent(editForm.value)" data-dismiss="modal" class="btn btn-primary">Save
+                  changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
